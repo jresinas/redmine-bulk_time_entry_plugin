@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 class BulkTimeEntriesController < ApplicationController
   unloadable
   layout 'base'
@@ -11,7 +10,7 @@ class BulkTimeEntriesController < ApplicationController
   include BulkTimeEntriesHelper
 
   protect_from_forgery :only => [:index, :save]
-  
+
   def index
     @time_entries = [TimeEntry.new(:spent_on => today_with_time_zone.to_s)]
   end
@@ -23,10 +22,10 @@ class BulkTimeEntriesController < ApplicationController
       format.js {}
     end
   end
-  
-  
+
+
   def save
-    if request.post? 
+    if request.post?
       @unsaved_entries = {}
       @saved_entries = {}
 
@@ -38,33 +37,39 @@ class BulkTimeEntriesController < ApplicationController
           @saved_entries[html_id] = time_entry
         end
       end
-      
+
       respond_to do |format|
         format.js {}
       end
     end
   end
-    
+
   def add_entry
     begin
-      spent_on = Date.parse(params[:date])
+      spent_on = Date.parse(params[:date]).next if params[:date].present?
     rescue ArgumentError
       # Fall through
     end
     spent_on ||= today_with_time_zone
-    
-    @time_entry = TimeEntry.new(:spent_on => spent_on.to_s)
+
+    hours = params[:hours].present? ? params[:hours].to_i : 0
+
+    @time_entry = TimeEntry.new(spent_on: spent_on.to_s, hours: hours.to_f)
+    @first_project = Project.find params[:project_id].to_i if params[:project_id].present?
+    @selected_issue = params[:issue_id].to_i if params[:issue_id].present?
+    @selected_activity = params[:activity_id].to_i if params[:activity_id].present?
+
     respond_to do |format|
       format.js {}
     end
   end
-  
+
   private
 
   def load_activities
     @activities = TimeEntryActivity.all
   end
-  
+
   def load_allowed_projects
     @projects = User.current.projects.find(:all,
       Project.allowed_to_condition(User.current, :log_time))
