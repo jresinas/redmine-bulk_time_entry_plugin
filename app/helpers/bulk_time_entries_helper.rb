@@ -1,6 +1,6 @@
 module BulkTimeEntriesHelper
   # Cheap knock off of the tabular form builder's labeling
-  def label_for_field(field, rnd_id = 1, options = { })
+  def label_for_field(field, rnd_id, options = { })
     label_text = l(options[:label]) if options[:label]
     label_text ||= l(("field_"+field.to_s.gsub(/\_id$/, "")).to_sym)
     label = content_tag(:label, label_text,
