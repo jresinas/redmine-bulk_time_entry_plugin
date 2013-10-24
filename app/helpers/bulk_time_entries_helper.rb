@@ -24,7 +24,7 @@ module BulkTimeEntriesHelper
     html
   end
 
-  def labeled_option_group_from_collection_for_select(label, collection, selected)
+  def labeled_option_group_from_collection_for_select(label, collection, selected = '')
     html = content_tag(:optgroup, '', label: l(label))
     html << options_from_collection_for_select(collection, :id, :to_s, selected)
     html

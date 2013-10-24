@@ -12,3 +12,6 @@
 
   $("#entry_" + <%=html_id%>).replaceWith("<div class='flash notice'><%=l(:text_time_added_to_project, count: entry.hours, target: time_entry_target)%>(<%=entry.comments unless entry.comments.blank?%>).</div>")
 <% end %>
+
+$('#add-entry').remove();
+$('form.tabular input[type="submit"]').remove();

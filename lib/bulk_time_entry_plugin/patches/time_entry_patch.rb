@@ -17,9 +17,9 @@ module BulkTimeEntryPlugin
           time_entry.save
           time_entry
         end
-        
+
       end
-      
+
     end
   end
 end
