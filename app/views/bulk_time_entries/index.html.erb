@@ -1,4 +1,4 @@
-<%= javascript_include_tag 'application', plugin: 'bulk_time_entry_plugin' %>
+<%= javascript_include_tag 'application', plugin: 'redmine-bulk_time_entry_plugin' %>
 <h2><%= l(:label_bulk_time_entries) %></h2>
 
 <%= form_for :bulk_time_entry_title, remote: true, :url => {:action => 'save'}, :html => {:class => 'tabular'} do |f| %>
