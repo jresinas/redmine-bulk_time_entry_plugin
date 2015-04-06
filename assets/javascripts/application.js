@@ -16,7 +16,7 @@ function chanegIssuesForProject(projectId, entryId) {
 }
 
 function setLinkParams() {
-  $('#add-entry-link').live('click', function(event) {
+  $('#add-entry-link').on('click', function(event) {
     event.preventDefault();
     var project_id = $('#entries select[id*="_project_id"]').last().val();
     var issue_id = $('#entries select[id*="_issue_id"]').last().val();
