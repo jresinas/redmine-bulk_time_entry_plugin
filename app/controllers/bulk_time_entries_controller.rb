@@ -71,7 +71,7 @@ class BulkTimeEntriesController < ApplicationController
   end
 
   def load_allowed_projects
-    @projects = User.current.projects.find(:all,
+    @projects = User.current.projects.where(
       Project.allowed_to_condition(User.current, :log_time))
   end
 
@@ -96,6 +96,7 @@ class BulkTimeEntriesController < ApplicationController
   end
 
   def self.allowed_project?(project_id)
-    return User.current.projects.find_by_id(project_id, :conditions => Project.allowed_to_condition(User.current, :log_time))
+    return User.current.projects.where(Project.allowed_to_condition(User.current, :log_time)).
+                                 where(id: project_id).first
   end
 end
