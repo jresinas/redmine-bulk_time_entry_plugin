@@ -6,12 +6,13 @@ function getLastTimeEntryDate() {
   }
 }
 
-function chanegIssuesForProject(projectId, entryId) {
+function changeIssuesForProject(projectId, entryId) {
+  var url = $(this).data('url');
   $.ajax({
     complete: function(request){},
     data: 'project_id=' + projectId + '&entry_id=' + entryId,
     type: 'post',
-    url: '/load_assigned_issues'
+    url: url
   });
 }
 
@@ -29,11 +30,13 @@ function setLinkParams() {
       + '&activity_id=' + activity_id
       + '&project_id=' + project_id;
 
+    var url = $(event.target).attr('href');
+
     $.ajax({
       complete: function(request){},
       data: mData,
       type: 'put',
-      url: '/add_entry'
+      url: url
     });
   });
 }
