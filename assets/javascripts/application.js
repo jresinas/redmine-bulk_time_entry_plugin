@@ -6,8 +6,10 @@ function getLastTimeEntryDate() {
   }
 }
 
-function changeIssuesForProject(projectId, entryId) {
-  var url = $(this).data('url');
+function changeIssuesForProject(select, entryId) {
+  var $select = $(select);
+  var url = $select.data('url');
+  var projectId = $select.val();
   $.ajax({
     complete: function(request){},
     data: 'project_id=' + projectId + '&entry_id=' + entryId,
