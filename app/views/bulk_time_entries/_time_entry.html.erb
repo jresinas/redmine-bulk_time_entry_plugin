@@ -21,7 +21,7 @@
       <%= label_for_field :project_id, rnd, :required => true %>
       <% projects = project_tree_options_for_select(@projects, :selected => @first_project) %>
       <%= f.select :project_id, projects, {},
-        { :onchange => "chanegIssuesForProject($(this).val(), #{rnd})" } %>
+        { :onchange => "changeIssuesForProject(this, #{rnd})", data: { url: load_assigned_issues_path } }%>
     </p>
     <% @issues = get_issues @first_project.id %>
     <%= render :partial => 'issues_selector', :locals => { :issues => @issues, :f => f, :rnd => rnd } %>

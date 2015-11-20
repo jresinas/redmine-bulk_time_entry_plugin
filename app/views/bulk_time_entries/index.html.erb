@@ -6,7 +6,7 @@
     <%= render :partial => 'time_entry', :collection => @time_entries %>
   </div>
   <div id="add-entry">
-    <%= link_to l(:label_bulk_time_add_another), "#", remote: true, id: 'add-entry-link' %>
+    <%= link_to l(:label_bulk_time_add_another), add_entry_path, id: 'add-entry-link' %>
   </div>
   <br/>
   <%= submit_tag l(:button_save) %>
