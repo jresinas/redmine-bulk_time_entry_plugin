@@ -3,10 +3,12 @@ module BulkTimeEntriesHelper
   def label_for_field(field, rnd_id, options = { })
     label_text = l(options[:label]) if options[:label]
     label_text ||= l(("field_"+field.to_s.gsub(/\_id$/, "")).to_sym)
-    label = content_tag(:label, label_text,
+    span = options.delete(:required) ? content_tag(:span, " *", :class => "required") : ""
+    label = content_tag(:label,
       :class => (@object && @object.errors[field] ? "error" : nil),
-      :for => (@object_name.to_s + "_" + rnd_id.to_s + "_" + field.to_s))
-    label << content_tag(:span, " *", :class => "required") if options.delete(:required)
+      :for => (@object_name.to_s + "_" + rnd_id.to_s + "_" + field.to_s)) do
+      (label_text + span).html_safe
+    end
     label
   end
 
