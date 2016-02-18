@@ -52,12 +52,23 @@ class BulkTimeEntriesController < ApplicationController
     end
     spent_on ||= today_with_time_zone
 
-    hours = params[:hours].present? ? params[:hours].to_i : 0
+    if params[:specific_issue_id].present?
+      issue = Issue.find(params[:specific_issue_id])
+      if issue.present?
+        @time_entry = TimeEntry.new(spent_on: spent_on.to_s, hours: 0.0)
+        @selected_issue = issue.id
+        @first_project = issue.project
+      else
+        render nothing: true
+      end
+    else
+      hours = params[:hours].present? ? params[:hours].to_i : 0
 
-    @time_entry = TimeEntry.new(spent_on: spent_on.to_s, hours: hours.to_f)
-    @first_project = Project.find params[:project_id].to_i if params[:project_id].present?
-    @selected_issue = params[:issue_id].to_i if params[:issue_id].present?
-    @selected_activity = params[:activity_id].to_i if params[:activity_id].present?
+      @time_entry = TimeEntry.new(spent_on: spent_on.to_s, hours: hours.to_f)
+      @first_project = Project.find params[:project_id].to_i if params[:project_id].present?
+      @selected_issue = params[:issue_id].to_i if params[:issue_id].present?
+      @selected_activity = params[:activity_id].to_i if params[:activity_id].present?
+    end
 
     respond_to do |format|
       format.js {}
