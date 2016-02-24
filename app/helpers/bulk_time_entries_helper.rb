@@ -20,9 +20,9 @@ module BulkTimeEntriesHelper
       html << labeled_option_group_from_collection_for_select(:label_open_issues, open_issues, selected)
     end
 
-    # unless closed_issues.empty?
-    #   html << labeled_option_group_from_collection_for_select(:label_closed_issues, closed_issues)
-    # end
+    unless closed_issues.empty?
+      html << labeled_option_group_from_collection_for_select(:label_closed_issues, closed_issues)
+    end
     html
   end
 
@@ -30,14 +30,5 @@ module BulkTimeEntriesHelper
     html = content_tag(:optgroup, '', label: l(label))
     html << options_from_collection_for_select(collection, :id, :to_s, selected)
     html
-  end
-
-  def get_issues(project_id)
-    project = BulkTimeEntriesController.allowed_project?(project_id)
-    if project
-      project.issues.order('id ASC')
-    else
-      []
-    end
   end
 end
